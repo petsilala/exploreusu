@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explore Medan</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+    --main: #7f0808;
+    --dark: #4a0202;
+    --accent: #d4af37;
+    --bg: #fdf8f8;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    overflow-x:hidden;
+}
+
+/* NAVBAR */
+header{
+    position:fixed;
+    width:100%;
+    top:0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 60px;
+    backdrop-filter:blur(12px);
+    background:rgba(127,8,8,0.8);
+    z-index:1000;
+}
+
+header h1{
+    font-family:'Playfair Display', serif;
+    color:white;
+}
+
+/* NAV */
+nav ul{
+    display:flex;
+    gap:25px;
+    list-style:none;
+}
+
+nav ul li{
+    position:relative;
+    padding-bottom:10px;
+}
+
+nav a{
+    text-decoration:none;
+    color:white;
+    font-weight:500;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:var(--accent);
+}
+
+.arrow {
+    display:inline-block;
+    transform: rotate(90deg);
+    margin-left:5px;
+    font-size:14px;
+}
+
+/* DROPDOWN */
+nav ul li ul{
+    position:absolute;
+    top:100%;
+    left:0;
+    background:white;
+    border-radius:12px;
+    padding:10px 0;
+    min-width:180px;
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(10px);
+    transition:0.3s;
+    box-shadow:0 15px 35px rgba(0,0,0,0.15);
+}
+
+nav ul li:hover ul{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+}
+
+nav ul li ul li{
+    padding:10px 20px;
+}
+
+nav ul li ul li a{
+    color:#333;
+    font-size:14px;
+}
+
+/* HERO */
+.hero{
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:white;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero img{
+    position:absolute;
+    width:100%;
+    height:120%;
+    object-fit:cover;
+    z-index:-2;
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:linear-gradient(rgba(74,2,2,0.6), rgba(0,0,0,0.85));
+    z-index:-1;
+}
+
+.hero-content h2{
+    font-family:'Playfair Display', serif;
+    font-size:60px;
+    animation:fadeUp 1s ease forwards;
+}
+
+.hero-content p{
+    margin-top:10px;
+    font-size:20px;
+    animation:fadeUp 1.5s ease forwards;
+}
+
+/* BUTTON */
+.btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:12px 25px;
+    background:var(--main);
+    color:white;
+    border-radius:8px;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:var(--dark);
+    transform:scale(1.08);
+}
+
+/* SECTION */
+section{
+    padding:100px 80px;
+}
+
+section h2{
+    font-family:'Playfair Display', serif;
+    text-align:center;
+    margin-bottom:20px;
+    color:var(--main);
+}
+
+section h2::after{
+    content:"";
+    width:60px;
+    height:3px;
+    background:var(--main);
+    display:block;
+    margin:10px auto 30px;
+}
+
+/* WHY */
+.why{
+    max-width:900px;
+    margin:auto;
+    text-align:center;
+}
+
+.why p{
+    font-size:18px;
+    line-height:1.8;
+    color:#555;
+}
+
+/* HIGHLIGHT */
+.highlight{
+    display:flex;
+    justify-content:center;
+    gap:80px;
+    padding:60px 20px;
+    background:#f8f4f4;
+    text-align:center;
+}
+
+.highlight div{
+    font-family:'Playfair Display', serif;
+    font-size:40px;
+    color:var(--main);
+}
+
+.highlight span{
+    display:block;
+    font-size:14px;
+    color:#555;
+    margin-top:5px;
+}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+/* 🔥 KHUSUS PROJECT (4 DALAM 1 BARIS) */
+.project-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+/* CARD */
+.card{
+    border-radius:20px;
+    overflow:hidden;
+    background:white;
+    transition:0.4s;
+    cursor:pointer;
+}
+
+.card img{
+    width:100%;
+    height:180px; /* sedikit lebih kecil biar muat 4 */
+    object-fit:cover;
+    transition:0.5s;
+}
+
+.card h3{
+    padding:15px;
+    font-family:'Playfair Display', serif;
+    color:var(--dark);
+    font-size:16px;
+}
+
+.card:hover{
+    transform:translateY(-15px) scale(1.03);
+    box-shadow:0 20px 40px rgba(127,8,8,0.3);
+}
+
+.card:hover img{
+    transform:scale(1.1);
+}
+
+/* CTA */
+.cta{
+    background:linear-gradient(135deg,#7f0808,#4a0202);
+    color:white;
+    text-align:center;
+    padding:80px 20px;
+}
+
+/* FOOTER */
+footer{
+    background:#2a0008;
+    color:white;
+    text-align:center;
+    padding:40px;
+}
+
+/* ANIMATION */
+@keyframes fadeUp{
+    from{opacity:0; transform:translateY(40px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* SCROLL */
+.fade{
+    opacity:0;
+    transform:translateY(40px);
+    transition:0.8s;
+}
+
+.fade.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    nav ul{display:none;}
+    section{padding:70px 20px;}
+
+    .hero-content h2{font-size:32px;}
+
+    .highlight{
+        flex-direction:column;
+        gap:30px;
+    }
+
+    /* project jadi stack di hp */
+    .project-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Explore Medan</h1>
+
+<nav>
+<ul>
+<li><a href="#">Home</a></li>
+
+<li>
+<a href="#">Our Project <span class="arrow">›</span></a>
+<ul>
+<li><a href="#">Happy Bus</a></li>
+<li><a href="#">Global Classroom</a></li>
+<li><a href="#">Green Leader</a></li>
+<li><a href="#">On The Map</a></li>
+</ul>
+</li>
+
+<li>
+<a href="#">Living in Medan <span class="arrow">›</span></a>
+<ul>
+<li><a href="#">Accommodation</a></li>
+<li><a href="#">Living Cost</a></li>
+<li><a href="#">What $1 Gets You</a></li>
+</ul>
+</li>
+
+<li><a href="#">North Sumatra</a></li>
+<li><a href="#">Contact</a></li>
+
+</ul>
+</nav>
+</header>
+
+<section class="hero">
+<img src="image/hero.jpg" id="heroImg">
+
+<div class="hero-content">
+<h2>Discover Medan</h2>
+<p>Experience culture, diversity, and meaningful volunteering</p>
+<a href="#" class="btn">Start Your Journey</a>
+</div>
+</section>
+
+<section class="fade why">
+<h2>Why Medan?</h2>
+<p>
+As the gateway to North Sumatra, Medan offers more than a city experience — it is your starting point to breathtaking destinations like Lake Toba, rich cultures, and unforgettable human connections.
+</p>
+</section>
+
+<section class="highlight">
+<div>20+<span>Exchange Participants</span></div>
+<div>iGV<span>Growth Award</span></div>
+<div>#1<span>LC in Indonesia</span></div>
+</section>
+
+<section class="fade">
+<h2>Explore the City</h2>
+
+<div class="grid">
+<div class="card"><img src="image/medan1.jpg"><h3>Local Culture</h3></div>
+<div class="card"><img src="image/medan2.jpg"><h3>Traditional Food</h3></div>
+<div class="card"><img src="image/medan3.jpg"><h3>Tourism</h3></div>
+</div>
+</section>
+
+<!-- 🔥 UPDATED PROJECT SECTION -->
+<section class="fade">
+<h2>Our Projects</h2>
+
+<div class="project-grid">
+<div class="card"><img src="image/project1.jpg"><h3>Happy Bus</h3></div>
+<div class="card"><img src="image/project2.jpg"><h3>Global Classroom</h3></div>
+<div class="card"><img src="image/project3.jpg"><h3>Green Leader</h3></div>
+<div class="card"><img src="image/project4.jpg"><h3>On The Map</h3></div>
+</div>
+</section>
+
+<section class="cta">
+<h2>Ready to Explore Medan?</h2>
+<p>Join us and create real impact</p>
+<a href="#" class="btn">Apply Now</a>
+</section>
+
+<footer>
+<p>© 2026 Explore Medan | Luxury Experience</p>
+</footer>
+
+<script>
+const hero = document.getElementById('heroImg');
+window.addEventListener('scroll', () => {
+    hero.style.transform = `translateY(${window.scrollY * 0.4}px)`;
+});
+
+const fades = document.querySelectorAll('.fade');
+window.addEventListener('scroll', () => {
+    fades.forEach(el => {
+        if(el.getBoundingClientRect().top < window.innerHeight - 100){
+            el.classList.add('show');
+        }
+    });
+});
+</script>
+
+</body>
+</html>
