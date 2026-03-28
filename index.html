@@ -348,10 +348,25 @@ footer{
         transform:translateX(0);
     }
 
+    /* 🔥 INI YANG UDAH ADA */
     nav ul li ul{
         position:relative;
         background:none;
         box-shadow:none;
+    }
+
+    /* 🔥 TAMBAHKAN DI SINI */
+    nav ul li{
+        padding:10px 0;
+    }
+
+    nav ul li ul{
+        display:none;
+        padding-left:15px;
+    }
+
+    nav ul li.active ul{
+        display:block;
     }
 
     .project-grid{
@@ -378,7 +393,7 @@ footer{
 
 <li><a href="#">Home</a></li>
 
-<li>
+<li class="dropdown">
 <a href="#">Our Project</a>
 <ul>
 <li><a href="happybus.html">Happy Bus</a></li>
@@ -388,7 +403,7 @@ footer{
 </ul>
 </li>
 
-<li>
+<li class="dropdown">
 <a href="#">Living in Medan</a>
 <ul>
 <li><a href="accommodation.html">Accommodation</a></li>
