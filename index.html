@@ -11,15 +11,17 @@
 
 :root {
     --main: #7f0808;
-    --dark: #4a0202;
-    --accent: #d4af37;
-    --bg: #fdf8f8;
+    --dark: #3a0000;
+    --accent: #caa64b;
+    --bg: #f9f6f6;
+    --soft: #f3eeee;
 }
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
+    scroll-behavior:smooth;
 }
 
 body{
@@ -38,13 +40,21 @@ header{
     align-items:center;
     padding:20px 60px;
     backdrop-filter:blur(12px);
-    background:rgba(127,8,8,0.8);
+    background:rgba(127,8,8,0.85);
     z-index:1000;
 }
 
 header h1{
     font-family:'Playfair Display', serif;
     color:white;
+}
+
+/* HAMBURGER */
+.menu-toggle{
+    display:none;
+    font-size:28px;
+    color:white;
+    cursor:pointer;
 }
 
 /* NAV */
@@ -118,14 +128,15 @@ nav ul li ul li a{
     color:white;
     position:relative;
     overflow:hidden;
+    z-index:1;
 }
 
 .hero img{
     position:absolute;
     width:100%;
-    height:120%;
+    height:100%;
     object-fit:cover;
-    z-index:-2;
+    z-index:0;
 }
 
 .hero::after{
@@ -133,20 +144,21 @@ nav ul li ul li a{
     position:absolute;
     width:100%;
     height:100%;
-    background:linear-gradient(rgba(74,2,2,0.6), rgba(0,0,0,0.85));
-    z-index:-1;
+    background:linear-gradient(rgba(0, 0, 0, 0.7), rgba(0,0,0,0.85));
+    z-index:1;
+    pointer-events:none;
+}
+
+.hero-content{
+    position: relative;
+    z-index: 4;
 }
 
 .hero-content h2{
-    font-family:'Playfair Display', serif;
-    font-size:60px;
-    animation:fadeUp 1s ease forwards;
-}
-
-.hero-content p{
-    margin-top:10px;
-    font-size:20px;
-    animation:fadeUp 1.5s ease forwards;
+    font-size:72px;
+    color:white;
+    letter-spacing:2px;
+    text-shadow:0 10px 30px rgba(0,0,0,0.5);
 }
 
 /* BUTTON */
@@ -154,21 +166,27 @@ nav ul li ul li a{
     display:inline-block;
     margin-top:20px;
     padding:12px 25px;
-    background:var(--main);
-    color:white;
+    background:var(--accent);
+    color:#fff;
     border-radius:8px;
     text-decoration:none;
     transition:0.3s;
+    z-index:2;
 }
 
 .btn:hover{
-    background:var(--dark);
+    background:var(--main);
     transform:scale(1.08);
 }
 
 /* SECTION */
 section{
     padding:100px 80px;
+    transition:0.4s;
+}
+
+section:nth-child(even){
+    background:var(--soft);
 }
 
 section h2{
@@ -182,7 +200,7 @@ section h2::after{
     content:"";
     width:60px;
     height:3px;
-    background:var(--main);
+    background:var(--accent);
     display:block;
     margin:10px auto 30px;
 }
@@ -206,7 +224,6 @@ section h2::after{
     justify-content:center;
     gap:80px;
     padding:60px 20px;
-    background:#f8f4f4;
     text-align:center;
 }
 
@@ -230,7 +247,6 @@ section h2::after{
     gap:25px;
 }
 
-/* 🔥 KHUSUS PROJECT (4 DALAM 1 BARIS) */
 .project-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -248,7 +264,7 @@ section h2::after{
 
 .card img{
     width:100%;
-    height:180px; /* sedikit lebih kecil biar muat 4 */
+    height:180px;
     object-fit:cover;
     transition:0.5s;
 }
@@ -262,28 +278,35 @@ section h2::after{
 
 .card:hover{
     transform:translateY(-15px) scale(1.03);
-    box-shadow:0 20px 40px rgba(127,8,8,0.3);
-}
-
-.card:hover img{
-    transform:scale(1.1);
+    box-shadow:0 20px 40px rgba(127,8,8,0.2);
 }
 
 /* CTA */
 .cta{
-    background:linear-gradient(135deg,#7f0808,#4a0202);
+    background:linear-gradient(135deg,#7f0808,#2c0000);
     color:white;
     text-align:center;
     padding:80px 20px;
 }
-
-/* FOOTER */
-footer{
-    background:#2a0008;
+.cta h2{
     color:white;
+    font-size:40px;
+    letter-spacing:1px;
+}
+
+.cta p{
+    color:rgba(255,255,255,0.85);
+    margin-top:10px;
+}
+footer{
+    background:#2c0000;
+    color:#f5f5f5; /* bukan putih pekat */
     text-align:center;
     padding:40px;
+    font-size:14px;
+    letter-spacing:0.5px;
 }
+
 
 /* ANIMATION */
 @keyframes fadeUp{
@@ -291,7 +314,6 @@ footer{
     to{opacity:1; transform:translateY(0);}
 }
 
-/* SCROLL */
 .fade{
     opacity:0;
     transform:translateY(40px);
@@ -305,20 +327,40 @@ footer{
 
 /* RESPONSIVE */
 @media(max-width:768px){
-    nav ul{display:none;}
-    section{padding:70px 20px;}
 
-    .hero-content h2{font-size:32px;}
-
-    .highlight{
-        flex-direction:column;
-        gap:30px;
+    .menu-toggle{
+        display:block;
     }
 
-    /* project jadi stack di hp */
+    nav ul{
+        position:absolute;
+        top:70px;
+        right:0;
+        background:#7f0808;
+        flex-direction:column;
+        width:220px;
+        padding:20px;
+        transform:translateX(100%);
+        transition:0.3s;
+    }
+
+    nav ul.active{
+        transform:translateX(0);
+    }
+
+    nav ul li ul{
+        position:relative;
+        background:none;
+        box-shadow:none;
+    }
+
     .project-grid{
         grid-template-columns:1fr;
     }
+
+    section{padding:70px 20px;}
+
+    .hero-content h2{font-size:32px;}
 }
 
 </style>
@@ -329,31 +371,34 @@ footer{
 <header>
 <h1>Explore Medan</h1>
 
+<div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
 <nav>
-<ul>
+<ul id="menu">
+
 <li><a href="#">Home</a></li>
 
 <li>
-<a href="#">Our Project <span class="arrow">›</span></a>
+<a href="#">Our Project</a>
 <ul>
-<li><a href="#">Happy Bus</a></li>
-<li><a href="#">Global Classroom</a></li>
-<li><a href="#">Green Leader</a></li>
-<li><a href="#">On The Map</a></li>
+<li><a href="happybus.html">Happy Bus</a></li>
+<li><a href="globalclassroom.html">Global Classroom</a></li>
+<li><a href="greenleader.html">Green Leader</a></li>
+<li><a href="onthemap.html">On The Map</a></li>
 </ul>
 </li>
 
 <li>
-<a href="#">Living in Medan <span class="arrow">›</span></a>
+<a href="#">Living in Medan</a>
 <ul>
-<li><a href="#">Accommodation</a></li>
-<li><a href="#">Living Cost</a></li>
-<li><a href="#">What $1 Gets You</a></li>
+<li><a href="accommodation.html">Accommodation</a></li>
+<li><a href="cost.html">Living Cost</a></li>
+<li><a href="1dollar.html">What $1 Gets You</a></li>
 </ul>
 </li>
 
-<li><a href="#">North Sumatra</a></li>
-<li><a href="#">Contact</a></li>
+<li><a href="northsumatra.html">North Sumatra</a></li>
+<li><a href="contact.html">Contact</a></li>
 
 </ul>
 </nav>
@@ -365,14 +410,14 @@ footer{
 <div class="hero-content">
 <h2>Discover Medan</h2>
 <p>Experience culture, diversity, and meaningful volunteering</p>
-<a href="#" class="btn">Start Your Journey</a>
+<a href="#projects" class="btn">Start Your Journey</a>
 </div>
 </section>
 
 <section class="fade why">
 <h2>Why Medan?</h2>
 <p>
-As the gateway to North Sumatra, Medan offers more than a city experience — it is your starting point to breathtaking destinations like Lake Toba, rich cultures, and unforgettable human connections.
+Medan is your gateway to North Sumatra — from Lake Toba to diverse cultures, offering meaningful experiences beyond tourism.
 </p>
 </section>
 
@@ -392,26 +437,25 @@ As the gateway to North Sumatra, Medan offers more than a city experience — it
 </div>
 </section>
 
-<!-- 🔥 UPDATED PROJECT SECTION -->
-<section class="fade">
+<section class="fade" id="projects">
 <h2>Our Projects</h2>
 
 <div class="project-grid">
-<div class="card"><img src="./project1.jpg"><h3>Happy Bus</h3></div>
-<div class="card"><img src="./project2.jpg"><h3>Global Classroom</h3></div>
-<div class="card"><img src="./project3.jpg"><h3>Green Leader</h3></div>
-<div class="card"><img src="./project4.jpg"><h3>On The Map</h3></div>
+<a href="happybus.html" class="card"><img src="./project1.jpg"><h3>Happy Bus</h3></a>
+<a href="globalclassroom.html" class="card"><img src="./project2.jpg"><h3>Global Classroom</h3></a>
+<a href="greenleader.html" class="card"><img src="./project3.jpg"><h3>Green Leader</h3></a>
+<a href="onthemap.html" class="card"><img src="./project4.jpg"><h3>On The Map</h3></a>
 </div>
 </section>
 
 <section class="cta">
 <h2>Ready to Explore Medan?</h2>
 <p>Join us and create real impact</p>
-<a href="#" class="btn">Apply Now</a>
+<a href="apply.html" class="btn">Apply Now</a>
 </section>
 
 <footer>
-<p>© 2026 Explore Medan | Luxury Experience</p>
+<p>© 2026 Explore Medan</p>
 </footer>
 
 <script>
@@ -428,6 +472,11 @@ window.addEventListener('scroll', () => {
         }
     });
 });
+
+/* MOBILE MENU */
+function toggleMenu(){
+    document.getElementById("menu").classList.toggle("active");
+}
 </script>
 
 </body>
