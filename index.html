@@ -479,6 +479,15 @@ window.addEventListener('scroll', () => {
     hero.style.transform = `translateY(${window.scrollY * 0.4}px)`;
 });
 
+const dropdowns = document.querySelectorAll(".dropdown");
+
+dropdowns.forEach(drop => {
+    drop.addEventListener("click", function(e){
+        e.stopPropagation();
+        this.classList.toggle("active");
+    });
+});
+
 const fades = document.querySelectorAll('.fade');
 window.addEventListener('scroll', () => {
     fades.forEach(el => {
