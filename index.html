@@ -281,6 +281,49 @@ section h2::after{
     box-shadow:0 20px 40px rgba(127,8,8,0.2);
 }
 
+/* CAROUSEL */
+.carousel{
+    overflow:hidden;
+    position:relative;
+    padding:40px 0;
+}
+
+.carousel-track{
+    display:flex;
+    gap:20px;
+    overflow-x:auto;
+    scroll-behavior:smooth;
+    padding:20px;
+}
+
+.carousel-track::-webkit-scrollbar{
+    display:none;
+}
+
+/* CARD BASE */
+.carousel .card{
+    min-width:260px;
+    flex-shrink:0;
+    transition:0.4s;
+    transform:scale(0.85);
+    opacity:0.5;
+    filter:blur(2px);
+}
+
+/* CARD ACTIVE (TENGAH) */
+.carousel .card.active{
+    transform:scale(1.1);
+    opacity:1;
+    filter:blur(0);
+    z-index:2;
+}
+
+
+.carousel-track{
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+}
+
 /* CTA */
 .cta{
     background:linear-gradient(135deg,#7f0808,#2c0000);
@@ -398,7 +441,7 @@ footer{
 <ul>
 <li><a href="happybus.html">Happy Bus</a></li>
 <li><a href="globalclassroom.html">Global Classroom</a></li>
-<li><a href="greenleader.html">Green Leaders</a></li>
+<li><a href="greenleader.html">Green Leader</a></li>
 <li><a href="onthemap.html">On The Map</a></li>
 </ul>
 </li>
@@ -445,10 +488,18 @@ Medan is your gateway to North Sumatra — from Lake Toba to diverse cultures, o
 <section class="fade">
 <h2>Explore the City</h2>
 
-<div class="grid">
-<div class="card"><img src="./medan1.jpg"><h3>Local Culture</h3></div>
+<div class="carousel">
+
+<div class="carousel-track">
+
+<div class="card active"><img src="./medan1.jpg"><h3>Local Culture</h3></div>
 <div class="card"><img src="./medan2.jpg"><h3>Traditional Food</h3></div>
 <div class="card"><img src="./medan3.jpg"><h3>Tourism</h3></div>
+<div class="card"><img src="./medan4.jpg"><h3>Hidden Gems</h3></div>
+<div class="card"><img src="./medan5.jpg"><h3>City Life</h3></div>
+
+</div>
+
 </div>
 </section>
 
@@ -487,6 +538,120 @@ dropdowns.forEach(drop => {
         this.classList.toggle("active");
     });
 });
+
+/* ===== TRUE INFINITE CAROUSEL ===== */
+
+const track = document.querySelector(".carousel-track");
+
+/* ambil card asli */
+let originalCards = Array.from(track.children);
+
+/* ukuran card */
+const gap = 20;
+const cardWidth = originalCards[0].offsetWidth + gap;
+
+/* clone ke kanan */
+originalCards.forEach(card => {
+    const clone = card.cloneNode(true);
+    track.appendChild(clone);
+});
+
+/* clone ke kiri */
+originalCards.slice().reverse().forEach(card => {
+    const clone = card.cloneNode(true);
+    track.insertBefore(clone, track.firstChild);
+});
+
+/* ambil ulang semua card */
+let cards = document.querySelectorAll(".carousel .card");
+
+/* mulai dari tengah */
+track.scrollLeft = originalCards.length * cardWidth;
+
+/* SET ACTIVE */
+function updateActive(){
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    cards.forEach((card, index)=>{
+        const rect = card.getBoundingClientRect();
+        const trackRect = track.getBoundingClientRect();
+        const center = trackRect.left + trackRect.width / 2;
+
+        const distance = Math.abs(rect.left + rect.width/2 - center);
+
+        if(distance < closestDistance){
+            closestDistance = distance;
+            closestIndex = index;
+        }
+    });
+
+    cards.forEach(card => card.classList.remove("active"));
+    cards[closestIndex].classList.add("active");
+}
+
+/* CLICK */
+cards.forEach((card, index)=>{
+    card.addEventListener("click", ()=>{
+        const offset = card.offsetLeft - (track.offsetWidth / 2) + (card.offsetWidth / 2);
+
+        track.scrollTo({
+            left: offset,
+            behavior: "smooth"
+        });
+    });
+});
+let isResetting = false;
+/* SCROLL EVENT */
+track.addEventListener("scroll", ()=>{
+
+    if(isResetting) return;
+
+    const maxScroll = track.scrollWidth;
+    const visibleWidth = track.clientWidth;
+
+    const resetPoint = originalCards.length * cardWidth;
+
+    /* 🔥 BUFFER biar ga nabrak ujung */
+    const buffer = cardWidth * 2;
+
+    /* 👉 kanan */
+    if (track.scrollLeft >= maxScroll - visibleWidth - buffer) {
+        isResetting = true;
+
+        track.scrollLeft = resetPoint;
+
+        setTimeout(()=> isResetting = false, 0);
+    }
+
+    /* 👉 kiri */
+    if (track.scrollLeft <= buffer) {
+        isResetting = true;
+
+        track.scrollLeft = resetPoint;
+
+        setTimeout(()=> isResetting = false, 0);
+    }
+
+    updateActive();
+});
+
+/* initial */
+updateActive();
+
+function setActiveCard(index){
+    cards.forEach(card => card.classList.remove("active"));
+    cards[index].classList.add("active");
+
+    const card = cards[index];
+    const offset = card.offsetLeft - (track.offsetWidth / 2) + (card.offsetWidth / 2);
+
+    /* ✅ smooth hanya saat klik */
+    track.scrollTo({
+        left: offset,
+        behavior: "smooth"
+    });
+}
 
 const fades = document.querySelectorAll('.fade');
 window.addEventListener('scroll', () => {
