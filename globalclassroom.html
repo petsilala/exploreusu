@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Classroom | Explore Medan</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+/* 🌍 SDG 4 THEME */
+:root {
+    --main: #C5192D; /* SDG 4 red */
+    --dark: #7a0d1a;
+    --accent: #f2c94c;
+    --bg: #fff7f7;
+    --soft: #fdeaea;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter', sans-serif;
+    background:var(--bg);
+}
+
+/* NAVBAR (SAMA) */
+header{
+    position:fixed;
+    width:100%;
+    top:0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 60px;
+    backdrop-filter:blur(12px);
+    background:rgba(197,25,45,0.9);
+    z-index:1000;
+}
+
+header h1{
+    font-family:'Playfair Display', serif;
+    color:white;
+}
+
+.menu-toggle{
+    display:none;
+    font-size:28px;
+    color:white;
+    cursor:pointer;
+}
+
+nav ul{
+    display:flex;
+    gap:25px;
+    list-style:none;
+}
+
+nav a{
+    text-decoration:none;
+    color:white;
+}
+
+/* HERO */
+.hero{
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:white;
+    position:relative;
+}
+
+.hero img{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h2{
+    font-size:64px;
+}
+
+.hero p{
+    margin-top:10px;
+}
+
+/* SECTION */
+section{
+    padding:100px 80px;
+}
+
+section h2{
+    font-family:'Playfair Display', serif;
+    text-align:center;
+    color:var(--main);
+    margin-bottom:20px;
+}
+
+/* OVERVIEW */
+.overview{
+    max-width:900px;
+    margin:auto;
+    text-align:center;
+    font-size:18px;
+    line-height:1.8;
+    color:#444;
+}
+
+/* HIGHLIGHT */
+.highlight{
+    display:flex;
+    justify-content:center;
+    gap:60px;
+    margin-top:40px;
+}
+
+.highlight div{
+    font-size:40px;
+    color:var(--main);
+}
+
+.highlight span{
+    display:block;
+    font-size:14px;
+}
+
+/* GALLERY */
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.gallery img{
+    width:100%;
+    border-radius:15px;
+    height:200px;
+    object-fit:cover;
+    transition:0.4s;
+}
+
+.gallery img:hover{
+    transform:scale(1.05);
+}
+
+/* FINAL CTA (ELEGANT TEXT STYLE) */
+.final-cta{
+    text-align:center;
+    padding:80px 20px;
+}
+
+.final-cta h2{
+    font-family:'Playfair Display', serif;
+    color:var(--main);
+    margin-bottom:10px;
+}
+
+.final-cta p{
+    color:#555;
+    margin-bottom:25px;
+}
+
+/* BUTTON STYLE */
+.cta-links{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.link-btn{
+    padding:10px 18px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:14px;
+    background:#f3f3f3;
+    color:#333;
+    transition:0.3s;
+}
+
+/* HOVER */
+.link-btn:hover{
+    transform:translateY(-3px);
+    background:#eaeaea;
+}
+
+/* PRIMARY (APPLY) */
+.link-btn.primary{
+    background:var(--main);
+    color:white;
+}
+
+.link-btn.primary:hover{
+    background:var(--dark);
+}
+
+/* FOOTER */
+footer{
+    background:#2c0000;
+    color:#f5f5f5;
+    text-align:center;
+    padding:40px;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+    .menu-toggle{
+        display:block;
+    }
+
+    nav ul{
+        position:absolute;
+        top:70px;
+        right:0;
+        background:var(--main);
+        flex-direction:column;
+        width:220px;
+        padding:20px;
+        transform:translateX(100%);
+    }
+
+    nav ul.active{
+        transform:translateX(0);
+    }
+
+    .highlight{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    section{
+        padding:70px 20px;
+    }
+
+    .hero h2{
+        font-size:36px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Explore Medan</h1>
+<div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+<nav>
+<ul id="menu">
+<li><a href="index.html">Home</a></li>
+<li><a href="index.html#projects">Our Project</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+<img src="./project2.jpg">
+<div class="hero-content">
+<h2>Global Classroom</h2>
+<p>Empowering young minds through education</p>
+</div>
+</section>
+
+<!-- OVERVIEW -->
+<section>
+<h2>About the Project</h2>
+<div class="overview">
+Global Classroom is an educational initiative focused on teaching elementary school students while promoting <b>SDG 4: Quality Education</b>.  
+Through interactive learning, creativity, and cultural exchange, volunteers help children discover new perspectives and unlock their potential.
+</div>
+
+<div class="highlight">
+<div>100+<span>Students Impacted</span></div>
+<div>20+<span>Volunteers</span></div>
+<div>SDG 4<span>Quality Education</span></div>
+</div>
+</section>
+
+<!-- GALLERY -->
+<section>
+<h2>Moments & Activities</h2>
+
+<div class="gallery">
+<img src="./medan1.jpg">
+<img src="./medan2.jpg">
+<img src="./medan3.jpg">
+<img src="./medan4.jpg">
+</div>
+</section>
+<!-- DESCRIPTION -->
+<section class="overview">
+<h2>Why It Matters</h2>
+<p>
+Education is the foundation of a better future.  
+Global Classroom creates meaningful experiences where volunteers not only teach—but also inspire, connect, and grow together with students.  
+Each moment in the classroom becomes a story of impact, learning, and transformation.
+</p>
+</section>
+<section class="final-cta">
+<h2>Take the Next Step</h2>
+<p>
+Ready to explore more about Global Classroom?
+</p>
+<div class="cta-links">
+<a href="https://drive.google.com/file/d/1n1CRorylJcv16RAI8z1u49YhBbbhh8T5/view" target="_blank" class="link-btn">
+📘 View Booklet
+</a>
+<a href="apply.html" class="link-btn primary">
+✨ Apply Now
+</a>
+</div>
+</section>
+<footer>
+<p>© 2026 Explore Medan</p>
+</footer>
+
+<script>
+function toggleMenu(){
+    document.getElementById("menu").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>
